@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <description>Spring MVC Configuration</description>
+
+    <!-- 加载配置属性文件 SpringMvc.properties 到spring容器 方便在后面起他地方用到-->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:SpringMvc.properties"/>
+
+    <!-- 使用 Annotation 自动注册 Bean,只扫描 @Controller -->
+    <!--只扫描base-package="com.qf.springmvc.Controller这个路径下的包-->
+    <!--true的时候 默认扫描带有这4个注解 的 类 @Component, @Repository, @Service,@Controller 把扫描到的类初始化对象加入到spring容器-->
+
+    <context:component-scan base-package="com.qf.weektest.controllor" use-default-filters="false">
+        <!--flase的时候 扫描程序员指定的注解类 include-filter type="annotation" expression="org.springframework.stereotype.Controller-->
+        <!--就是只扫描带有Controller的类-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
+    </context:component-scan>
+
+    <!--扫描service包下的带注解的类-->
+    <context:component-scan base-package="com.qf.weektest.service.Impl"/>
+
+    <context:component-scan base-package="com.qf.weektest.service.Impl"/>
+
+    <!-- 默认的注解映射的支持 -->
+    <!--在controllor里面建立映射关系-->
+    <mvc:annotation-driven />
+
+
+    <!-- 定义视图文件解析 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--接收Controller包下的返回的视图名和图层-->
+        <!--然后去 ViewResolver 获取对应的视图-->
+
+        <!--前缀-->                       <!--位置-->
+        <property name="prefix" value="${web.mvc.prefix}"/>
+
+        <!--后缀-->                       <!--位置-->
+        <property name="suffix" value="${web.mvc.suffix}"/>
+
+    </bean>
+
+    <!-- 静态资源映射 扫描到我们的静态资源 不需要业务逻辑处理的数据 不需要controllor处理-->
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
+
+</beans>
