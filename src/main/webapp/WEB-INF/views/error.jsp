@@ -10,9 +10,10 @@
 <head>
     <title>Title</title>
 </head>
-    ${repairForm.errorApplianceName}<br/>
-    ${repairForm.repairMan}<br/>
-    ${repairForm.uploadFlag}<br/>
-    ${repairForm.finishFlag}<br/>
+    家电名：${repairForm.setErrorApplianceName()}<br/>
+    维修人：${repairForm.getRepairMan()}<br/>
+    提交状态：${repairForm.getUploadFlag()}<br/>
+    修理状态：${repairForm.getFinishFlag()}<br/>
+    <br/>
 </body>
 </html>

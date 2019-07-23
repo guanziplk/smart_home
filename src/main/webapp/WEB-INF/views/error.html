@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Error</title>
+</head>
+<body>
+    <thead>
+        <tr>
+            <th>家电名</th>
+            <th>维修人</th>
+            <th>上报情况</th>
+            <th>维修状况</th>
+        </tr>
+    </thead>
+    <tbody th:each="repair:${repairForm}">
+        <td th:text="${repair.errorApplianceName}"/>
+        <td th:text="${repair.repairMan}"/>
+        <td th:text="${repair.uploadFlag}"/>
+        <td th:text="${repair.finishFlag}"/>
+    </tbody>
+</body>
+</html>
