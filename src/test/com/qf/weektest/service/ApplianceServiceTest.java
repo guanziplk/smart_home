@@ -1,7 +1,6 @@
 package com.qf.weektest.service;
 
 
-import com.qf.weektest.entity.Appliance;
 import com.qf.weektest.entity.RepairForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;

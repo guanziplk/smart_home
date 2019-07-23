@@ -7,6 +7,33 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--引入mysql jdbc配置文件-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:/jdbc.properties</value>
+                <!--要是有多个配置文件，只需在这里继续添加即可 -->
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置mysql数据源 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!-- 使用properties来配置 -->
+        <property name="driverClassName">
+            <value>${jdbc.driverClass}</value>
+        </property>
+        <property name="url">
+            <value>${jdbc.connectionURL}</value>
+        </property>
+        <property name="username">
+            <value>${jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${jdbc.password}</value>
+        </property>
+    </bean>
+
     <!-- 配置 SqlSession -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -20,13 +47,11 @@
 
     <!-- 扫描 Mapper -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-
         <property name="basePackage" value="com.qf.weektest.dao"/>
     </bean>
 
     <context:component-scan base-package="com.qf.weektest"/>
     <!-- 默认的注解映射的支持 -->
     <mvc:annotation-driven />
-
 
 </beans>

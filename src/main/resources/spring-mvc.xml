@@ -16,7 +16,7 @@
     <!--只扫描base-package="com.qf.springmvc.Controller这个路径下的包-->
     <!--true的时候 默认扫描带有这4个注解 的 类 @Component, @Repository, @Service,@Controller 把扫描到的类初始化对象加入到spring容器-->
 
-    <context:component-scan base-package="com.qf.weektest.controllor" use-default-filters="false">
+    <context:component-scan base-package="com.qf.weektest.controller" use-default-filters="false">
         <!--flase的时候 扫描程序员指定的注解类 include-filter type="annotation" expression="org.springframework.stereotype.Controller-->
         <!--就是只扫描带有Controller的类-->
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -24,8 +24,6 @@
     </context:component-scan>
 
     <!--扫描service包下的带注解的类-->
-    <context:component-scan base-package="com.qf.weektest.service.Impl"/>
-
     <context:component-scan base-package="com.qf.weektest.service.Impl"/>
 
     <!-- 默认的注解映射的支持 -->
@@ -39,10 +37,10 @@
         <!--然后去 ViewResolver 获取对应的视图-->
 
         <!--前缀-->                       <!--位置-->
-        <property name="prefix" value="${web.mvc.prefix}"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
 
         <!--后缀-->                       <!--位置-->
-        <property name="suffix" value="${web.mvc.suffix}"/>
+        <property name="suffix" value=".jsp"/>
 
     </bean>
 

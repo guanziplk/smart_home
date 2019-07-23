@@ -6,6 +6,9 @@ import com.qf.weektest.service.RepairFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@SuppressWarnings("ALL")
 @Service
 public class RepairFormServiceImpl implements RepairFormService {
     @Autowired
@@ -19,5 +22,10 @@ public class RepairFormServiceImpl implements RepairFormService {
     @Override
     public int delete(String errorApplianceName) {
         return dao.delete(errorApplianceName);
+    }
+
+    @Override
+    public List<RepairForm> getAllErrorAppliance() {
+        return dao.getAllErrorAppliance();
     }
 }

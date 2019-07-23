@@ -6,28 +6,25 @@
             <!--插入操作-->                          <!--映射的类的地址-->                             <!--主键-->
     <insert id="insert" parameterType="com.qf.weektest.entity.RepairForm" useGeneratedKeys="true" keyProperty="errorApplianceName">
     INSERT INTO `RepairForm` (
-
 	`errorApplianceName`,
 	`repairMan`
-
     )
-
     VALUES
-
     (
-
     #{errorApplianceName},
     #{repairMan}
-
     );
     </insert>
 
 
     <!--根据id 删除数据-->
     <delete id="delete" >
-
         delete from `RepairForm` where errorApplianceName =#{errorApplianceName};
-
     </delete>
+
+    <!--获取所有errorAppliance的name-->
+    <select id="getAllErrorAppliance" resultType="RepairForm">
+        select `errorApplianceName`,`repairMan`,uploadFlag,finishFlag from repairform
+    </select>
 
 </mapper>
