@@ -119,6 +119,17 @@
       <artifactId>pagehelper-spring-boot-starter</artifactId>
       <version>1.2.5</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>jquery</artifactId>
+      <version>2.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>RELEASE</version>
+    </dependency>
 
 
 

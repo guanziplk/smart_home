@@ -1,23 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Error</title>
+    <script type="text/javascript" th:src="@{../static/js/jquery-2.1.1.min.js}"/>
 </head>
 <body>
-    <thead>
-        <tr>
-            <th>家电名</th>
-            <th>维修人</th>
-            <th>上报情况</th>
-            <th>维修状况</th>
-        </tr>
-    </thead>
-    <tbody th:each="repair:${repairForm}">
-        <td th:text="${repair.errorApplianceName}"/>
-        <td th:text="${repair.repairMan}"/>
-        <td th:text="${repair.uploadFlag}"/>
-        <td th:text="${repair.finishFlag}"/>
-    </tbody>
+<div>
+<button id="btn">刷新</button>
+</div>
+<div th:fragment="table_refresh" id="table_refresh">
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <td>家电名</td>
+                <td>维修人</td>
+                <td>上报情况</td>
+                <td>维修状况</td>
+            </tr>
+        </thead>
+        <br/>
+        <tbody id="tbody1">
+            <tr th:each="repair:${repairForm}">
+                <td><span th:text="${repair.errorApplianceName}"/></td>
+                <td><span th:text="${repair.repairMan}"/></td>
+                <td>
+                    <span th:if="${repair.uploadFlag} eq '1'">已上报</span>
+                    <span th:if="${repair.uploadFlag} eq '0'">未上报</span>
+                </td>
+                <td>
+                    <span th:if="${repair.finishFlag} eq '1'">已修理</span>
+                    <span th:if="${repair.finishFlag} eq '0'">未修理</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </body>
+<script type="text/javascript">
+
+</script>
 </html>
