@@ -1,10 +1,123 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>个体详情</title>
+    <link type="text/css" href="../../static/css/index.css" rel="stylesheet"/>
+    <link type="text/css" href="../../static/css/base.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../static/js/jquery-2.1.1.min.js"/>
+    <script type="text/javascript" src="../../static/js/control.js"/>
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../static/css/style.css" rel="stylesheet"/>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="../../static/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<div class="middle-box text-center loginscreen">
+    <div class="ibox-content" th:each="appliance:${list}">
+        <h2 class="TitleText" align="center">家电详情</h2>
+        <div class="form-group">
+            电器名：<br/><input th:value="*{appliance.applianceName}" readonly="readonly" id="applianceName" class="textbox"/>
+        </div>
+        <div class="form-group">
+            描述：<br/><input th:value="*{appliance.applianceDes}" readonly="readonly" id="applianceName" class="textbox"/>
+        </div>
+        <div class="form-group">
+            开始时间：<br/><input th:value="*{appliance.startTime}" readonly="readonly" id="applianceName" class="textbox"/>
+        </div>
+        <div class="form-group">
+            结束时间：<input th:value="*{appliance.endTime}" readonly="readonly" id="applianceName" class="textbox"/>
+        </div>
+        <div class="form-group">
+            运行状态：
+            <span>
+                <p th:if="${appliance.flag} eq '1'">运行中</p>
+                <p th:if="${appliance.flag} eq '0'">未运行</p>
+            </span>
+        </div>
+        <div class="form-group">
+            家电状态：
+            <span>
+                <p th:if="${appliance.errorFlag} eq '1'">正常运作中</p>
+                <p th:if="${appliance.errorFlag} eq '0'">异常！</p>
+            </span>
+        </div>
+        <div th:if="${appliance.errorFlag} eq '0'" class="form-group">
+            <span>维修人：<p th:text="${appliance.repairMan}"/></span>
+            <span>
+                是否上报：
+                <p th:if="${appliance.uploadFlag} eq '1'">已上报</p>
+                <p th:if="${appliance.uploadFlag} eq '0'">未上报</p>
+            </span>
+            <span>
+                修理状态：
+                <p th:if="${appliance.finishFlag} eq '1'">已修理</p>
+                <p th:if="${appliance.finishFlag} eq '0'">未修理</p>
+            </span>
+        </div>
+        <button type="button" id="NO" class="btn btn-sm btn-block btn-white full-width m-b">开启</button><br/>
+        <button type="button" id="OFF" class="btn btn-sm btn-block btn-white full-width m-b">关闭</button><br/>
+        <a class="btn btn-sm btn-block btn-white" href="/Appliance/select">返回</a>
+    </div>
+</div>
 </body>
+<script type="text/javascript">
+    $(function () {
+        $("#NO").click(function () {
+            $.ajax({
+                //数据接收方法地址
+                url:"/Handle/updateFlagNo",
+                //要传的参数,"startTime": new Date()
+                data: {"applianceName": $("#applianceName").val()},
+                //返回参数格式
+                dataType:"json",
+                //传送方式
+                type:"POST",
+                //回调函数
+                success:function (date) {
+                    if (date == 1) {
+                        $("span:eq(0)").html("运行中")
+                    }
+                },
+                error: function (XMLHttpResponse, textStatus, errorThrown) {
+                    console.log("1 异步调用返回失败,XMLHttpResponse.readyState:"+XMLHttpResponse.readyState);
+                    console.log("2 异步调用返回失败,XMLHttpResponse.status:"+XMLHttpResponse.status);
+                    console.log("3 异步调用返回失败,textStatus:"+textStatus);
+                    console.log("4 异步调用返回失败,errorThrown:"+errorThrown);
+                }
+            })
+            setInterval(function(){
+                document.getElementById('time').value=new Date().toLocaleTimeString()
+            },1000);
+            window.location.reload();
+        })
+
+        $("#OFF").click(function () {
+            $.ajax({
+                //数据接收方法地址
+                url:"/Handle/updateFlagOFF",
+                //要传的参数,"startTime": new Date()
+                data: {"applianceName": $("#applianceName").val()},
+                //返回参数格式
+                dataType:"json",
+                //传送方式
+                type:"POST",
+                //回调函数
+                success:function (date) {
+                    if (date == 0) {
+                        $("span:eq(0)").html("未运行")
+                    }
+                }
+            })
+            clearInterval(t);
+            window.location.reload();
+        })
+        //预加载函数结束范围
+    })
+</script>
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>start</title>
+
+    <script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            // location.href = "user/checkUserIsLogin";
+            $.get("user/checkUserIsLogin",
+                null,
+                function (flag) {
+                  // alert(flag);
+                    if (flag) {
+                        console.log("=======================");
+
+                        location.href = "/Appliance/select";
+                    }
+                });
+        })
+    </script>
+</head>
+<body>
+<div>
+    <div>welcome to smart home</div>
+    <br/>
+    <div><a href="login.html">登录</a></div>
+    <!--<div><a href="user/checkUserIsLogin">登录</a></div>-->
+    <br/>
+    <div><a href="register.html">注册</a></div>
+    <div><a href="/test/exit">test</a></div>
+</div>
+</body>
+</html>

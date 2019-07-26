@@ -50,4 +50,17 @@
 
     <!-- 静态资源映射 扫描到我们的静态资源 不需要业务逻辑处理的数据 不需要controllor处理-->
     <mvc:resources mapping="/static/**" location="/static/" cache-period="31536000"/>
+
+    <!-- 配置拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 哪些方法进行拦截 -->
+            <mvc:mapping path="/**"/>
+            <!-- 哪些方法不进行拦截 -->
+            <mvc:exclude-mapping path="/user/*"/>
+
+            <!-- 注册拦截器对象 -->
+            <bean class="com.qf.weektest.handler.HandlerInterceptorImpl"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

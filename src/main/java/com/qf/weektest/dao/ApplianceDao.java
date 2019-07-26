@@ -1,19 +1,16 @@
-package com.qf.weektest.service;
-
-
-
+package com.qf.weektest.dao;
 import com.qf.weektest.entity.Appliance;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Controller
 @Repository
-@Service
-public interface ApplianceService {
+public interface ApplianceDao {
 
     /**
-     * 添加电器到电器管理页面
+     * 添加电器到管理页面
      * @param appliance
      * @return
      */
@@ -21,12 +18,11 @@ public interface ApplianceService {
 
 
     /**
-     * 根据电器的id的把商品移除出电器管理页面
+     *根据电器的id删除电器
      * @param applianceId
      * @return
      */
     int deleteApplianceById(long applianceId);
-
 
     /**
      * 查询并展示所有的电器
@@ -41,6 +37,7 @@ public interface ApplianceService {
      * @return
      */
     List<Appliance> checkinsert(String applianceName);
+
 
 
 

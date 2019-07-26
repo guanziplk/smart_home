@@ -1,16 +1,30 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Error</title>
-    <script type="text/javascript" th:src="@{../static/js/jquery-2.1.1.min.js}"/>
+    <script type="text/javascript" th:src="@{../../static/js/jquery-2.1.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{../../static/js/control.js}">
+        /*$(function () {
+            // $(document).on("click", "#btn", function() {
+            //     alert('aaa');
+            //     window.location.reload();
+            // });
+            setTimeout(function () {
+                fresh();
+            },10000);
+            setInterval(function () {
+                fresh();
+            },10000);
+            function fresh() {
+                window.location.reload();
+            }
+        })*/
+    </script>
 </head>
 <body>
-<div>
-<button id="btn">刷新</button>
-</div>
-<div th:fragment="table_refresh" id="table_refresh">
-    <table border="1" cellspacing="0">
+    <table border="1" cellspacing="0" id="table_refresh">
         <thead>
             <tr>
                 <td>家电名</td>
@@ -25,8 +39,12 @@
                 <td><span th:text="${repair.errorApplianceName}"/></td>
                 <td><span th:text="${repair.repairMan}"/></td>
                 <td>
-                    <span th:if="${repair.uploadFlag} eq '1'">已上报</span>
-                    <span th:if="${repair.uploadFlag} eq '0'">未上报</span>
+                    <!--<span th:if="${repair.uploadFlag} eq '1'">已上报</span>-->
+                    <!--<span th:if="${repair.uploadFlag} eq '0'">未上报</span>-->
+                    <span>
+                        <a th:if="${repair.uploadFlag} eq '1'">已上报</a>
+                        <a th:if="${repair.uploadFlag} eq '0'">未上报</a>
+                    </span>
                 </td>
                 <td>
                     <span th:if="${repair.finishFlag} eq '1'">已修理</span>
@@ -35,9 +53,5 @@
             </tr>
         </tbody>
     </table>
-</div>
 </body>
-<script type="text/javascript">
-
-</script>
 </html>

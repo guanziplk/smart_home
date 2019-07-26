@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.weektest.dao.HandleDao">
+    <!--开-->
+    <update id="updateFlagNO" parameterType="com.qf.weektest.entity.Appliance">
+    UPDATE appliance
+    SET flag = 1,
+    startTime=NOW(),
+    endTime=null
+    WHERE
+    applianceName = #{applianceName};
+    </update>
+    <!--关-->
+    <update id="updateFlagOFF" parameterType="com.qf.weektest.entity.Appliance">
+    UPDATE appliance
+    SET flag = 0,
+    endTime = NOW()
+    WHERE
+	applianceName = #{applianceName};
+    </update>
+    <!--查询flag值-->
+    <select id="selectFlag" resultType="com.qf.weektest.entity.Appliance" parameterType="com.qf.weektest.entity.Appliance">
+    SELECT
+	flag
+    FROM
+	appliance
+    WHERE
+	applianceId = #{id};
+    </select>
+    <!--查询errorFlag值-->
+    <select id="selectErrorFlag" resultType="com.qf.weektest.entity.Appliance" parameterType="com.qf.weektest.entity.Appliance">
+    SELECT
+	errorFlag
+    FROM
+	appliance
+    WHERE
+	applianceId = #{id};
+    </select>
+    <!--查询单个电器信息-->
+    <select id="selectOne" resultType="com.qf.weektest.entity.Appliance" parameterType="com.qf.weektest.entity.Appliance">
+    SELECT
+    *
+    FROM
+	appliance
+    WHERE
+	applianceId = #{applianceId};
+    </select>
+    <!--更改昵称-->
+    <update id="updateApplianceName" parameterType="com.qf.weektest.entity.Appliance">
+    UPDATE appliance
+    SET
+    applianceName = #{applianceName}
+    WHERE
+	applianceId = #{applianceId};
+    </update>
+</mapper>

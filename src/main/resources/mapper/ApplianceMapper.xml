@@ -1,30 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qf.weektest.dao.RepairFormDao">
+<mapper namespace="com.qf.weektest.dao.ApplianceDao">
 
 
             <!--插入操作-->                          <!--映射的类的地址-->                             <!--主键-->
-    <insert id="insert" parameterType="com.qf.weektest.entity.RepairForm" useGeneratedKeys="true" keyProperty="errorApplianceName">
-    INSERT INTO `RepairForm` (
-	`errorApplianceName`,
-	`repairMan`
+    <insert id="insertAppliance" parameterType="com.qf.weektest.entity.Appliance" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO `Appliance` (
+	`applianceName`,
+	`applianceDes`
     )
     VALUES
     (
-    #{errorApplianceName},
-    #{repairMan}
+    #{applianceName},
+    #{applianceDes}
+
     );
     </insert>
 
 
     <!--根据id 删除数据-->
-    <delete id="delete" >
-        delete from `RepairForm` where errorApplianceName =#{errorApplianceName};
-    </delete>
+    <delete id="deleteApplianceById" >
 
-    <!--获取所有errorAppliance的name-->
-    <select id="getAllErrorAppliance" resultType="RepairForm">
-        select `errorApplianceName`,`repairMan`,uploadFlag,finishFlag from repairform
+        delete from `Appliance` where applianceId =#{applianceId};
+
+    </delete>
+    
+
+    <!--查询并展示所有的电器-->
+    <select id="showAllAppliance" resultType="com.qf.weektest.entity.Appliance">
+SELECT
+	*
+FROM
+	Appliance
     </select>
+
+
+    <!--AJAX校验添加的电器是否已经存在-->
+    <select id="checkinsert" resultType="com.qf.weektest.entity.Appliance">
+
+SELECT
+	*
+FROM
+
+	Appliance
+
+      where applianceName =#{applianceName}
+
+
+
+
+    </select>
+
+
+
+
 
 </mapper>

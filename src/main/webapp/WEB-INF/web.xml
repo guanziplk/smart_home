@@ -15,7 +15,10 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
     <!--解决乱码问题-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>

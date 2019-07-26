@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <!--添加jquery配置文件-->
+    <script type="text/javascript" th:src="@{../static/js/jquery-2.1.1.min.js}"></script>
+    <script type="text/javascript">
+
+
+        $(function () {
+            $("#NO").click(function () {
+                $.ajax({
+                    //数据接收方法地址
+                    url:"/user/updateFlagNo",
+                    //要传的参数,"startTime": new Date()
+
+                    data: {"applianceName": $("#applianceName").val()},
+
+                    //返回参数格式
+                    dataType:"json",
+                    //传送方式
+                    type:"POST",
+                    //回调函数
+                    success:function (date) {
+                        if (date == 1) {
+                            $("span:eq(0)").html("运行中")
+                        }
+                    },
+                    error: function (XMLHttpResponse, textStatus, errorThrown) {
+                        console.log("1 异步调用返回失败,XMLHttpResponse.readyState:"+XMLHttpResponse.readyState);
+                        console.log("2 异步调用返回失败,XMLHttpResponse.status:"+XMLHttpResponse.status);
+                        console.log("3 异步调用返回失败,textStatus:"+textStatus);
+                        console.log("4 异步调用返回失败,errorThrown:"+errorThrown);
+                    }
+
+                })
+            })
+
+            $("#OFF").click(function () {
+                $.ajax({
+                    //数据接收方法地址
+                    url:"/user/updateFlagOFF",
+                    //要传的参数,"startTime": new Date()
+                    data: {"applianceName": $("#applianceName").val()},
+                    //返回参数格式
+                    dataType:"json",
+                    //传送方式
+                    type:"POST",
+                    //回调函数
+                    success:function (date) {
+
+                        if (date == 0) {
+                            $("span:eq(0)").html("未运行")
+                        }
+                    }
+
+                })
+            })
+
+
+
+         //预加载函数结束范围
+        })
+    </script>
+</head>
+<body>
+
+
+    <span th:text="Hello"></span>
+
+        <div th:each="appliance1:${list}">
+            <p>家电:<input th:value="*{appliance1.applianceName}" readonly="readonly" id="applianceName"/> </p>
+            <p>详情:<span th:text="*{appliance1.applianceDes}"/> </p>
+            <p>开启时间:<span th:text="*{appliance1.startTime}"/> </p>
+
+            <button id="runtime" onclick="t=setInterval(function(){document.getElementById('time').value=new Date().toLocaleTimeString()},1000);">计时开始</button>
+            <button name="kg" onclick="clearInterval(t);">计时结束</button>
+            <input id="time" type="text" value="0"/><br/>
+
+            <button type="button" id="NO">开</button><br/>
+            <button type="button" id="OFF">关</button><br/>
+            <a th:href="@{/user/updatename(applianceId=*{appliance1.applianceId},applianceName=*{appliance1.applianceName})}">更改名字</a>
+        </div>
+
+
+</body>
+</html>

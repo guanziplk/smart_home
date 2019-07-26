@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="static/css/login&register.css" rel="stylesheet">
+    <script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="static/js/bootstrap.min.js"></script>
+
+       <script>
+
+        $(function () {
+            // location.href = "user/checkUserIsLogin";
+            $.get("user/checkUserIsLogin",
+                null,
+                function (flag) {
+                    // alert(flag);
+                    if (flag) {
+                        location.href = "/Appliance/select";
+                    }
+                });
+        })
+        //校验用户名
+        //单词字符，长度8到20位
+        function checkUsername() {
+            //1.获取用户名值
+            var username = $("#username").val();
+            //2.定义正则
+            var reg_username = /^\w{2,20}$/;
+
+            //3.判断，给出提示信息
+            var flag = reg_username.test(username);
+            if (flag) {
+                //用户名合法
+                $("#username").css("border", "");
+                $("#username").html("");
+                return repetitiveUsername();
+            } else {
+                //用户名非法,加一个红色边框
+                $("#s_username").html("请输入正确的用户名");
+                $("#s_username").css("color", "red");
+                $("#username").css("border", "1px solid red");
+            }
+            // alert("username");
+            return flag;
+        }
+
+        // 重名
+        function repetitiveUsername() {
+            //1.获取用户名值
+            var username = $("#username").val();
+
+
+            //发送ajax请求
+            //期望服务器响应回的数据格式：{"userExsit":true,"msg":"此用户名太受欢迎,请更换一个"}
+            //                         {"userExsit":false,"msg":"用户名可用"}
+            $.get("user/repetitiveUsername", {username: username}, function (userExsit) {
+                //判断userExsit键的值是否是true
+
+                // alert(userExsit);
+                var flag = userExsit == "1";
+                if (flag) {
+                    //用户名存在
+                    $("#s_username").css("color", "red");
+                    $("#s_username").html("此用户名太受欢迎,请更换一个");
+                    $("#usernameFlag").attr("value", "0");
+
+                } else {
+                    //用户名不存在
+                    $("#s_username").css("color", "green");
+                    $("#s_username").html("用户名可用");
+                    $("#usernameFlag").attr("value", "1");
+
+                }
+                return flag;
+            });
+
+            // alert("repetitiveUsername");
+        }
+
+        //校验密码
+        function checkPassword() {
+            //1.获取密码值
+            var password = $("#password").val();
+            //2.定义正则
+            var reg_password = /^\w{2,20}$/;
+
+            //3.判断，给出提示信息
+            var flag = reg_password.test(password);
+            if (flag) {
+                //密码合法
+                $("#password").css("border", "");
+                $("#s_password").html("");
+
+            } else {
+                //密码非法,加一个红色边框
+                $("#s_password").html("请输入正确的密码");
+                $("#s_password").css("color", "red");
+                $("#password").css("border", "1px solid red");
+            }
+            // alert("checkPassword");
+
+            return flag;
+        }
+
+        function confirmPassword() {
+
+            var password = $("#password").val();
+
+            var confirm_password = $("#confirm_password").val();
+
+            //3.判断，给出提示信息
+            var flag = password == confirm_password;
+            if (flag) {
+                //密码合法
+                $("#confirm_password").css("border", "");
+                $("#s_confirm_password").html("");
+
+            } else {
+                //密码非法,加一个红色边框
+                $("#s_confirm_password").html("两次密码不一致");
+                $("#s_confirm_password").css("color", "red");
+                $("#confirm_password").css("border", "1px solid red");
+            }
+            // alert("confirmPassword");
+
+            return flag;
+        }
+
+        //校验手机号
+        function checkPhone() {
+            //1.获取邮箱
+            var phone = $("#phone").val();
+            //2.定义正则
+            var reg_phone = /^1[3456789]\d{9}$/;
+
+            //3.判断
+            var flag = reg_phone.test(phone);
+            if (flag) {
+                $("#phone").css("border", "");
+            } else {
+                $("#phone").css("border", "1px solid red");
+            }
+
+            return flag;
+        }
+
+        $(function () {
+            //当表单提交时，调用所有的校验方法
+            $("form").submit(function () {
+
+                var usernameFlag = $("#usernameFlag").attr("value") == "1";
+                //1.发送数据到服务器
+                if (usernameFlag && checkPassword() && confirmPassword() && checkPhone()) {
+                    //校验通过,发送ajax请求，提交表单的数据   username=zhangsan&password=123
+
+                    // alert($("form").serialize());
+                    $.post("user/signUp",
+                        $("form").serialize(),
+                        function (flag) {
+                        //处理服务器响应的数据  data  {flag:true,errorMsg:"注册失败"}
+
+                            if (flag == 0) {
+                                //    注册失败
+                                $("#errorMsg").html("注册失败");
+                            } else {
+                                location.href = "login.html";
+                            }
+
+                        // if (data.flag) {
+                        //     //注册成功，跳转成功页面
+                        //     location.href = "register_ok.html";
+                        // } else {
+                        //     //注册失败,给errorMsg添加提示信息
+                        //     $("#errorMsg").html(data.errorMsg);
+                        //
+                        // }
+                    });
+
+                }
+                //2.不让页面跳转
+                return false;
+                //如果这个方法没有返回值，或者返回为true，则表单提交，如果返回为false，则表单不提交
+            });
+
+            //当某一个组件失去焦点是，调用对应的校验方法
+            $("#username").blur(checkUsername);
+            // $("#username").blur(repetitiveUsername);
+            $("#password").blur(checkPassword);
+            $("#phone").blur(checkPhone);
+            $("#confirm_password").blur(confirmPassword);
+
+
+        });
+
+
+    </script>
+
+</head>
+<body>
+<span id="usernameFlag" value="0"></span>
+<div class="middle-box text-center loginscreen">
+    <div class="ibox-content">
+        <h2 class="TitleText" align="center">用户注册</h2>
+        <form name="register" id="register" action="user" method="post">
+        <div class="form-group">
+            <!-- 用户名：<input class="form-control" type="text" id="username" name="username"> -->
+                    <label for="username">用户名</label>
+                     <input type="text" id="username" name="username" placeholder="请输入账号"/>
+        </div>
+            <span id="s_username"></span>
+        <br/>
+        <div class="form-group">
+            <!-- 密码：<input class="form-control" type="text" name="password"> -->
+                                        <label for="password">密码</label>
+                            <input type="text" id="password" name="password" placeholder="请输入密码"/>
+        </div>
+                                 <span id="s_password"></span>
+
+        <div class="form-group">
+            <!-- 确认密码：<input class="form-control" type="text" id="difpwd" name="difpwd"> -->
+                    <label for="confirm_password">确认密码</label>
+                    <input type="text" id="confirm_password" name="confirm_password" placeholder="请再次输入密码"/>
+        </div>
+                                 <span id="s_confirm_password"></span>    
+                 <div class="form-group">
+            <!-- 确认密码：<input class="form-control" type="text" id="difpwd" name="difpwd"> -->
+            <label for="phone">手机号</label>
+            <input type="text" id="phone" name="phone" placeholder="请输入您的手机号"/>
+        </div>
+    <span id="s_phone"></span>
+
+        <div class="LastDiv2">
+            <input class="btn btn-sm btn-block btn-white full-width m-b" type="submit" value="注册">
+            <input class="btn btn-sm btn-block btn-white" type="reset" value="重置">
+            <p class="text-muted text-center">
+                已经有账号了吗？
+            </p>
+            <a class="btn btn-sm btn-block btn-white" href="login.html">快去登陆</a>
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

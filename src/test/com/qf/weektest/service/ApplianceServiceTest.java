@@ -1,6 +1,7 @@
 package com.qf.weektest.service;
 
 
+import com.qf.weektest.entity.Appliance;
 import com.qf.weektest.entity.RepairForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +17,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ApplianceServiceTest {
 
     @Autowired
-    public RepairFormService repairFormService;
+    public ApplianceService applianceService;
 
 
-    @Test
+
+    /*@Test
     public void testinsert(){
 
         //模拟测试 赋值
@@ -47,6 +49,6 @@ public class ApplianceServiceTest {
 
         System.out.println(i);
 
-    }
+    }*/
 
 }

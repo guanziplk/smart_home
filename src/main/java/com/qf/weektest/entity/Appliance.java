@@ -3,20 +3,25 @@ package com.qf.weektest.entity;
 import java.util.Date;
 
 public class Appliance {
-    private long applianceId;//家电编号
-    private String applianceName;//家电名字
-    private int flag;//家电运行状态（默认1为运行中，0为停止）
-    private Date startTime;//启动时间
-    private Date endTime;//结束时间
-    private String runningTime;//运行时间
-    private String totalRunningTime;//总运行时间
-    private String applianceDes;//家电描述
-    private int errorFlag;//错误状态（默认1为正常，0为异常）
+
+
+    private long applianceId;
+    private String applianceName;
+    private int flag;
+    private Date startTime;
+    private Date endTime;
+    private String runningTime;
+    private String totalRunningTime;
+    private String applianceDes;
+    private int errorFlag;
+    private int uploadFlag;
+    private int finishFlag;
+    private String repairMan;
 
     public Appliance() {
     }
 
-    public Appliance(long applianceId, String applianceName, int flag, Date startTime, Date endTime, String runningTime, String totalRunningTime, String applianceDes, int errorFlag) {
+    public Appliance(long applianceId, String applianceName, int flag, Date startTime, Date endTime, String runningTime, String totalRunningTime, String applianceDes, int errorFlag, int uploadFlag, int finishFlag, String repairMan) {
         this.applianceId = applianceId;
         this.applianceName = applianceName;
         this.flag = flag;
@@ -26,6 +31,9 @@ public class Appliance {
         this.totalRunningTime = totalRunningTime;
         this.applianceDes = applianceDes;
         this.errorFlag = errorFlag;
+        this.uploadFlag = uploadFlag;
+        this.finishFlag = finishFlag;
+        this.repairMan = repairMan;
     }
 
     public long getApplianceId() {
@@ -98,5 +106,29 @@ public class Appliance {
 
     public void setErrorFlag(int errorFlag) {
         this.errorFlag = errorFlag;
+    }
+
+    public int getUploadFlag() {
+        return uploadFlag;
+    }
+
+    public void setUploadFlag(int uploadFlag) {
+        this.uploadFlag = uploadFlag;
+    }
+
+    public int getFinishFlag() {
+        return finishFlag;
+    }
+
+    public void setFinishFlag(int finishFlag) {
+        this.finishFlag = finishFlag;
+    }
+
+    public String getRepairMan() {
+        return repairMan;
+    }
+
+    public void setRepairMan(String repairMan) {
+        this.repairMan = repairMan;
     }
 }

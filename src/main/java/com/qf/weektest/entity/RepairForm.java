@@ -1,5 +1,7 @@
 package com.qf.weektest.entity;
 
+import java.util.List;
+
 public class RepairForm {
     private String errorApplianceName;
     private String repairMan;

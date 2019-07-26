@@ -1,10 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>添加</title>
+    <meta charset="UTF-8"/>
+    <title>添加电器</title>
+    <link type="text/css" href="../../static/css/index.css" rel="stylesheet"/>
+    <link type="text/css" href="../../static/css/base.css" rel="stylesheet"/>
+    <script type="text/javascript" src="../../static/js/jquery-2.1.1.min.js"/>
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../static/css/style.css" rel="stylesheet"/>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="../../static/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<div class="middle-box text-center loginscreen">
+    <form action="/Appliance/insertAppliance" method="post" enctype="multipart/form-data">
+        <div class="ibox-content">
+            <h2 class="TitleText" align="center">添加页面</h2>
+            <div class="form-group">
+                电器名:<br/>
+                <input type="text" name="applianceName" id="applianceName"/>
+                <br/>
+                <span></span>
+            </div>
+            <div class="form-group">
+                电器的描述:<br/>
+                <input type="text" name="applianceDes" id="applianceDes"/>
+                <br/>
+                <span></span>
+            </div>
+            <input type="submit" class="btn btn-sm btn-block btn-white full-width m-b" value="确认添加"/>
+            <input type="reset" class="btn btn-sm btn-block btn-white full-width m-b" value="重置"/>
+            <a class="btn btn-sm btn-block btn-white" href="/Appliance/select">返回</a>
+        </div>
+    </form>
+</div>
 </body>
+<script type="text/javascript">
+    $(function(){
+        var a = false;
+        var b = false;
+        var c = false;
+        //文本框点击事件
+        $("#applianceName").blur(function(){
+            //判断输入的值是否为空
+            var applianceName=$("#applianceName").val()
+            if(!applianceName.trim()){
+                $("span:eq(0)").text("电器名不能为空")
+                return;
+            }else {
+                $("span:eq(0)").text("ok")
+            }
+            $.ajax({
+                type:"POST",
+                url:"/Appliance/checkinsert",
+                data:{
+                    applianceName:$("#applianceName").val()
+                },
+                dataType:"json",
+                error:function (data) {
+                    if(data==2){
+                        $("span:eq(0)").text("电器名不能为空")
+                    }
+                },
+                success:function(data){
+                    if(data==1){
+                        //将接收到的数据显示到文本框
+                        $("span:eq(0)").text("已存在,不能重复添加")
+                        a=false;
+                    } else if(data==0) {
+                        $("span:eq(0)").text("可以添加")
+                        a=true;
+                    }
+                }
+            })
+        });
+        //电器的描述添加点击事件
+        $(function () {
+            $("#applianceDes").blur(function () {
+                //传入的值不能为空或者null
+                if($(this).val().trim()==""){
+                    $("span:eq(1)").text("电器描述不能为空")
+                    b=false;
+                }else{
+                    $("span:eq(1)").text("ok")
+                    b=true;
+                }
+            })
+        });
+        $(function () {
+            $(document).on("click","#submit",function () {
+                /*<![CDATA[*/
+                if(a&&b){
+                    $("from").submit();
+                }
+                /*]]>*/
+                else {
+                    alert("完善信息才能提交喔");
+                    return false;
+                }
+            })
+        })
+    });
+</script>
 </html>
